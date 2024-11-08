@@ -1,0 +1,24 @@
+# traefik/traefik.yml
+entryPoints:
+  web:
+    address: ":80"
+
+api:
+  dashboard: true
+
+providers:
+  docker:
+    exposedByDefault: false
+
+middlewares:
+  ipWhitelist:
+    ipWhiteList:
+      sourceRange:
+        - "192.168.1.2" # Replace with your whitelisted IP address
+        - "127.0.0.1" # Localhost for testing
+
+  maintenanceRedirect:
+    redirectRegex:
+      regex: "^(.*)$"
+      replacement: "http://192.168.1.2/maintenance.html"
+      permanent: true
